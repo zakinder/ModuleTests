@@ -1,0 +1,92 @@
+
+library ieee;
+library work;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+use work.constantspackage.all;
+package vpfRecords is
+type channel is record
+    valid            : std_logic;
+    red              : std_logic_vector(7 downto 0);
+    green            : std_logic_vector(7 downto 0);
+    blue             : std_logic_vector(7 downto 0);
+end record;
+
+type intersectPoint is record
+    lft              : integer;
+    rht              : integer;
+    top              : integer;
+    bot              : integer;
+end record;
+type cord is record
+    x                : integer;
+    y                : integer;
+end record;
+type mRegs is record
+    cfigReg0         : std_logic_vector(31 downto 0);
+    cfigReg1         : std_logic_vector(31 downto 0);
+    cfigReg2         : std_logic_vector(31 downto 0);
+    cfigReg3         : std_logic_vector(31 downto 0);
+    cfigReg4         : std_logic_vector(31 downto 0);
+    cfigReg5         : std_logic_vector(31 downto 0);
+    cfigReg6         : std_logic_vector(31 downto 0);
+    cfigReg7         : std_logic_vector(31 downto 0);
+    cfigReg8         : std_logic_vector(31 downto 0);
+    cfigReg9         : std_logic_vector(31 downto 0);
+    cfigReg10        : std_logic_vector(31 downto 0);
+    cfigReg11        : std_logic_vector(31 downto 0);
+    cfigReg12        : std_logic_vector(31 downto 0);
+    cfigReg13        : std_logic_vector(31 downto 0);
+    cfigReg14        : std_logic_vector(31 downto 0);
+    cfigReg15        : std_logic_vector(31 downto 0);
+    cfigReg16        : std_logic_vector(31 downto 0);
+    cfigReg17        : std_logic_vector(31 downto 0);
+    cfigReg18        : std_logic_vector(31 downto 0);
+    cfigReg19        : std_logic_vector(31 downto 0);
+    cfigReg20        : std_logic_vector(31 downto 0);
+    cfigReg21        : std_logic_vector(31 downto 0);
+    cfigReg22        : std_logic_vector(31 downto 0);
+    cfigReg23        : std_logic_vector(31 downto 0);
+    cfigReg24        : std_logic_vector(31 downto 0);
+    cfigReg25        : std_logic_vector(31 downto 0);
+    cfigReg26        : std_logic_vector(31 downto 0);
+    cfigReg27        : std_logic_vector(31 downto 0);
+    cfigReg28        : std_logic_vector(31 downto 0);
+    cfigReg29        : std_logic_vector(31 downto 0);
+    cfigReg30        : std_logic_vector(31 downto 0);
+    cfigReg31        : std_logic_vector(31 downto 0);
+    cfigReg32        : std_logic_vector(31 downto 0);
+    cfigReg33	     : std_logic_vector(31 downto 0);
+    cfigReg34	     : std_logic_vector(31 downto 0);
+    cfigReg35	     : std_logic_vector(31 downto 0);
+    cfigReg36	     : std_logic_vector(31 downto 0);
+    cfigReg37	     : std_logic_vector(31 downto 0);
+    cfigReg38	     : std_logic_vector(31 downto 0);
+    cfigReg39	     : std_logic_vector(31 downto 0);
+    cfigReg40	     : std_logic_vector(31 downto 0);
+    cfigReg41	     : std_logic_vector(31 downto 0);
+    cfigReg42	     : std_logic_vector(31 downto 0);
+    cfigReg43	     : std_logic_vector(31 downto 0);
+    cfigReg44	     : std_logic_vector(31 downto 0);
+    cfigReg45	     : std_logic_vector(31 downto 0);
+    cfigReg46	     : std_logic_vector(31 downto 0);
+    cfigReg47	     : std_logic_vector(31 downto 0);
+    cfigReg48	     : std_logic_vector(31 downto 0);
+    cfigReg49	     : std_logic_vector(31 downto 0);
+    cfigReg50	     : std_logic_vector(31 downto 0);
+    cfigReg51	     : std_logic_vector(31 downto 0);
+    cfigReg52	     : std_logic_vector(31 downto 0);
+    cfigReg53	     : std_logic_vector(31 downto 0);
+    cfigReg54	     : std_logic_vector(31 downto 0);
+    cfigReg55	     : std_logic_vector(31 downto 0);
+    cfigReg56	     : std_logic_vector(31 downto 0);
+    cfigReg57	     : std_logic_vector(31 downto 0);
+    cfigReg58	     : std_logic_vector(31 downto 0);
+    cfigReg59	     : std_logic_vector(31 downto 0);
+    cfigReg60	     : std_logic_vector(31 downto 0);
+    cfigReg61	     : std_logic_vector(31 downto 0);
+    cfigReg62	     : std_logic_vector(31 downto 0);
+    cfigReg63	     : std_logic_vector(31 downto 0);
+end record;
+end package;
