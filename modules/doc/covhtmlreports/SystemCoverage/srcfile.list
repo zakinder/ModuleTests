@@ -1,0 +1,4 @@
+../modules/dut/pixelCord.vhd
+../modules/dut/template.v
+../modules/dut/vfpConfig.vhd
+../modules/top.sv

@@ -1,0 +1,6 @@
+var g_db_data = [
+{dummy:0},
+{name:'template_cg',f:1,type:6,id:1021,tb:'24',h:'8',m:'16',hp:'33.33%',cov:['41.66%','R'],g:'100.00%',gp:['41.66%','R'],opts:[[],['merge_instance','auto(true)']],lnk:'__HDL_srcfile_2.htm#689',hdlPath:'/socTest_pkg/template_monitor_afterToDut',parent:'1020'},
+{name:'aL_cg',f:1,type:6,id:1031,tb:'128',h:'0',m:'128',hp:'0.00%',cov:['0.00%','R'],g:'100.00%',gp:['0.00%','R'],opts:[[],['merge_instance','auto(true)']],lnk:'__HDL_srcfile_2.htm#913',hdlPath:'/socTest_pkg/axiLite_fc_subscriber',parent:'1030'},
+{name:'rgb_cg',f:1,type:6,id:1035,tb:'454',h:'9',m:'445',hp:'1.98%',cov:['17.62%','R'],g:'100.00%',gp:['17.62%','R'],opts:[[],['merge_instance','auto(true)']],lnk:'__HDL_srcfile_2.htm#934',hdlPath:'/socTest_pkg/rgb_fc_subscriber',parent:'1034'}];
+processConsCovergroupsData(g_db_data);

@@ -1,0 +1,16 @@
+-html
+-htmldir
+../modules/doc/covhtmlreports/SystemCoverage
+-source
+-details
+-assert
+-directive
+-cvg
+-code
+bcefst
+-verbose
+-threshL
+50
+-threshH
+90
+SystemCoverage.ucdb

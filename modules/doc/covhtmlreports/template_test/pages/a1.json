@@ -1,0 +1,24 @@
+var g_data = {
+a1012:{
+scopes:[{s:'977',b:'0',val:'socTest_pkg'},{val:'template_sequence'},{val:'body'},{link:'z.htm?f=0&s=1012',val:'#ublk#215236535#324'}]
+,assertions:[{dummy:0},{cr:'c',c:'g',lnk:'__HDL_srcfile_2.htm#327',z:'immed__327',fc:'Gr',pc:'Gr',h0:'0',h1:'1'}
+],
+},
+a1052:{
+scopes:[{s:'977',b:'1',val:'socTest_pkg'},{val:'template_test'},{link:'z.htm?f=0&s=1052',val:'run_phase'}]
+,assertions:[{dummy:0},{cr:'c',c:'g',lnk:'__HDL_srcfile_2.htm#1111',z:'immed__1111',fc:'Gr',pc:'Gr',h0:'0',h1:'1'}
+],
+},
+a1120:{
+scopes:[{s:'1085',b:'0',val:'work.socTest_pkg'},{val:'template_sequence'},{val:'body'},{link:'z.htm?f=0&s=1120',val:'#ublk#215236535#324'}]
+,assertions:[{dummy:0},{cr:'c',c:'g',lnk:'__HDL_srcfile_2.htm#327',z:'immed__327',fc:'Gr',pc:'Gr',h0:'0',h1:'1'}
+],
+},
+a1160:{
+scopes:[{s:'1085',b:'1',val:'work.socTest_pkg'},{val:'template_test'},{link:'z.htm?f=0&s=1160',val:'run_phase'}]
+,assertions:[{dummy:0},{cr:'c',c:'g',lnk:'__HDL_srcfile_2.htm#1111',z:'immed__1111',fc:'Gr',pc:'Gr',h0:'0',h1:'1'}
+],
+},
+dummyEnd:0
+};
+processAssertionsData(g_data,1);

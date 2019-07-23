@@ -19,12 +19,14 @@ class axiLite_configuration extends uvm_object;
         super.new(name);
     endfunction: new
 endclass: axiLite_configuration
+
 // UVM_OBJECT : RGB_CONFIGURATION [RGB]
 class rgb_configuration extends uvm_object;
     `uvm_object_utils(rgb_configuration)
     function new(string name = "");
         super.new(name);
     endfunction: new
+    
     rand int count;
     constraint c_count    { count > 0; count < 128; }
 endclass: rgb_configuration
@@ -143,7 +145,7 @@ endclass: rgb_sequencer
 //----------------------------------------------------------------------------------//
 // UVM_SEQUENCE
 //----------------------------------------------------------------------------------//
-// UVM_SEQUENCE : RANDOM_SEQUENCE [RGB]
+// UVM_SEQUENCE : RGB_RANDOM_SEQUENCE [RGB]
 class rgb_random_sequence extends uvm_sequence #(rgb_transaction);
     `uvm_object_utils(rgb_random_sequence);
     function new(string name = "rgb_random_sequence");
@@ -158,7 +160,8 @@ class rgb_random_sequence extends uvm_sequence #(rgb_transaction);
         end : random_loop
     endtask : body
 endclass : rgb_random_sequence
-// UVM_SEQUENCE
+
+// UVM_SEQUENCE : RANDOM_SEQUENCE_R1 [RGB]
 class random_sequence_r1 extends uvm_sequence #(rgb_transaction);
     `uvm_object_utils(random_sequence_r1);
     function new(string name = "random_sequence_r1");
@@ -166,7 +169,7 @@ class random_sequence_r1 extends uvm_sequence #(rgb_transaction);
     endfunction : new
     task body();
     rgb_transaction frame_tx = rgb_transaction::type_id::create("frame_tx");
-    `uvm_info("random_sequence_r1", "executing...", UVM_LOW)
+    //`uvm_info("random_sequence_r1", "executing...", UVM_LOW)
         repeat (100) begin : random_loop
             start_item(frame_tx);
             assert(frame_tx.randomize());
@@ -174,7 +177,8 @@ class random_sequence_r1 extends uvm_sequence #(rgb_transaction);
         end : random_loop
     endtask : body
 endclass : random_sequence_r1
-// UVM_SEQUENCE
+
+// UVM_SEQUENCE : RANDOM_SEQUENCE_R2 [RGB]
 class random_sequence_r2 extends random_sequence_r1;
     `uvm_object_utils(random_sequence_r2);
     function new(string name = "random_sequence_r2");
@@ -182,7 +186,7 @@ class random_sequence_r2 extends random_sequence_r1;
     endfunction : new
     task body();
     rgb_transaction frame_tx = rgb_transaction::type_id::create("frame_tx");
-    `uvm_info("random_sequence_r2", "executing...", UVM_LOW)
+    //`uvm_info("random_sequence_r2", "executing...", UVM_LOW)
         repeat (1) begin : random_loop
             start_item(frame_tx);
             assert(frame_tx.randomize());
@@ -190,35 +194,40 @@ class random_sequence_r2 extends random_sequence_r1;
         end : random_loop
     endtask : body
 endclass : random_sequence_r2
+
+// UVM_SEQUENCE : TOP_SEQUENCE [RGB]
 class top_sequence extends uvm_sequence #(rgb_transaction);
     `uvm_object_utils(top_sequence)
     `uvm_declare_p_sequencer(rgb_sequencer)
     function new (string name = "");
-    super.new(name);
+        super.new(name);
     endfunction
+
     task body;
-    rgb_configuration cfg;
-    int count;
-    if ( uvm_config_db #(rgb_configuration)::get(p_sequencer, "", "config", cfg) )
-    begin
-    count    = cfg.count;
-    end
-    else
-    begin
-    count    = 1;
-    end
-    if (starting_phase != null)
-    starting_phase.raise_objection(this);
-    repeat(count)
-    begin
-    random_sequence_r1 seq;
-    seq = random_sequence_r1::type_id::create("seq");
-    seq.start(p_sequencer, this);
-    end
-    if (starting_phase != null)
-    starting_phase.drop_objection(this);
+        rgb_configuration cfg;
+        int count;
+
+        if ( uvm_config_db #(rgb_configuration)::get(p_sequencer, "", "config", cfg) ) begin
+            count    = cfg.count;
+        end
+        else begin
+            count    = 1;
+        end
+        
+        if (starting_phase != null)
+            starting_phase.raise_objection(this);
+
+        repeat(count) begin
+            random_sequence_r1 seq;
+            seq = random_sequence_r1::type_id::create("seq");
+            seq.start(p_sequencer, this);
+        end
+
+        if (starting_phase != null)
+            starting_phase.drop_objection(this);
     endtask: body
 endclass: top_sequence
+
 // UVM_SEQUENCE : AXILITE_BASE_SEQ [AXILITE]
 virtual class axiLite_base_seq extends uvm_sequence #(axiLite_transaction);
     function new (string name="axiLite_base_seq");
@@ -366,7 +375,7 @@ class axiLite_driver extends uvm_driver #(axiLite_transaction);
                 @(posedge axiLiteVif.ACLK);
             end
             seq_item_port.get_next_item(req);
-            `uvm_info("DRV", req.convert2string(), UVM_LOW)
+            //`uvm_info("DRV", req.convert2string(), UVM_LOW)
             repeat(req.cycles) begin
                 @(posedge axiLiteVif.ACLK);
             end
@@ -395,7 +404,7 @@ class axiLite_driver extends uvm_driver #(axiLite_transaction);
         drive_data_phase(aL_txn);
     endtask: drive_transfer
     virtual protected task drive_address_phase (axiLite_transaction aL_txn);
-        `uvm_info("axiLite_master_driver", "drive_address_phase",UVM_HIGH)
+        //`uvm_info("axiLite_master_driver", "drive_address_phase",UVM_HIGH)
         case (aL_txn.reqWriteRead)
             READ : drive_read_address_channel(aL_txn);
             WRITE: drive_write_address_channel(aL_txn);
@@ -662,7 +671,7 @@ class axiLite_monitor extends uvm_monitor;
             //aL_txn.cycles--;
              //`uvm_info("axiLiteVif data", aL_txn.sprint(), UVM_LOW);
                 if (valid_txn == 'b1 ) begin
-                    `uvm_info("MON", aL_txn.convert2string(), UVM_LOW) 
+                    //`uvm_info("MON", aL_txn.convert2string(), UVM_LOW) 
                     item_collected_port.write(aL_txn);
                     //item_collected_port.write(aL_txn);
                 end
@@ -825,9 +834,9 @@ endclass: rgb_monitor
 class axiLite_agent extends uvm_agent;
     `uvm_component_utils(axiLite_agent)
     uvm_analysis_port#(axiLite_transaction) item_collected_port;
-    axiLite_sequencer                     aL_sqr;
-    axiLite_driver                     aL_drv;
-    axiLite_monitor                     aL_mon;
+    axiLite_sequencer       aL_sqr;
+    axiLite_driver          aL_drv;
+    axiLite_monitor         aL_mon;
     function new (string name, uvm_component parent);
         super.new(name, parent);
     endfunction
@@ -875,21 +884,21 @@ class template_agent extends uvm_agent;
     `uvm_component_utils(template_agent)
     uvm_analysis_port#(template_transaction) agent_ap_beforeFromDut;
     uvm_analysis_port#(template_transaction) agent_ap_afterToDut;
-    template_sequencer        sa_seqr;
-    template_driver            sa_drvr;
-    template_monitor_beforeFromDut    sa_mon_beforeFromDut;
-    template_monitor_afterToDut    sa_mon_afterToDut;
+    template_sequencer                       sa_seqr;
+    template_driver                          sa_drvr;
+    template_monitor_beforeFromDut           sa_mon_beforeFromDut;
+    template_monitor_afterToDut              sa_mon_afterToDut;
     function new(string name, uvm_component parent);
         super.new(name, parent);
     endfunction: new
     function void build_phase(uvm_phase phase);
         super.build_phase(phase);
-        agent_ap_beforeFromDut    = new(.name("agent_ap_beforeFromDut"), .parent(this));
-        agent_ap_afterToDut        = new(.name("agent_ap_afterToDut"), .parent(this));
-        sa_seqr                    = template_sequencer::type_id::create(.name("sa_seqr"), .parent(this));
-        sa_drvr                    = template_driver::type_id::create(.name("sa_drvr"), .parent(this));
-        sa_mon_beforeFromDut    = template_monitor_beforeFromDut::type_id::create(.name("sa_mon_beforeFromDut"), .parent(this));
-        sa_mon_afterToDut        = template_monitor_afterToDut::type_id::create(.name("sa_mon_afterToDut"), .parent(this));
+        agent_ap_beforeFromDut      = new(.name("agent_ap_beforeFromDut"), .parent(this));
+        agent_ap_afterToDut         = new(.name("agent_ap_afterToDut"), .parent(this));
+        sa_seqr                     = template_sequencer::type_id::create(.name("sa_seqr"), .parent(this));
+        sa_drvr                     = template_driver::type_id::create(.name("sa_drvr"), .parent(this));
+        sa_mon_beforeFromDut        = template_monitor_beforeFromDut::type_id::create(.name("sa_mon_beforeFromDut"), .parent(this));
+        sa_mon_afterToDut           = template_monitor_afterToDut::type_id::create(.name("sa_mon_afterToDut"), .parent(this));
     endfunction: build_phase
     function void connect_phase(uvm_phase phase);
         super.connect_phase(phase);
@@ -994,23 +1003,23 @@ endclass: rgb_scoreboard
 // UVM_SCORECARD : TEMPLATE_SCOREBOARD [TEMPLATE]
 class template_scoreboard extends uvm_scoreboard;
     `uvm_component_utils(template_scoreboard)
-    uvm_analysis_export #(template_transaction)         sb_export_beforeFromDut;
-    uvm_analysis_export #(template_transaction)         sb_export_afterToDut;
-    uvm_tlm_analysis_fifo #(template_transaction)     before_fifo;
-    uvm_tlm_analysis_fifo #(template_transaction)     after_fifo;
+    uvm_analysis_export #(template_transaction)     sb_export_beforeFromDut;
+    uvm_analysis_export #(template_transaction)     sb_export_afterToDut;
+    uvm_tlm_analysis_fifo #(template_transaction)   before_fifo;
+    uvm_tlm_analysis_fifo #(template_transaction)   after_fifo;
     template_transaction transaction_beforeFromDut;
     template_transaction transaction_afterToDut;
     function new(string name, uvm_component parent);
         super.new(name, parent);
-        transaction_beforeFromDut    = new("transaction_beforeFromDut");
-        transaction_afterToDut    = new("transaction_afterToDut");
+        transaction_beforeFromDut       = new("transaction_beforeFromDut");
+        transaction_afterToDut          = new("transaction_afterToDut");
     endfunction: new
     function void build_phase(uvm_phase phase);
         super.build_phase(phase);
-        sb_export_beforeFromDut    = new("sb_export_beforeFromDut", this);
-        sb_export_afterToDut        = new("sb_export_afterToDut", this);
-           before_fifo            = new("before_fifo", this);
-        after_fifo            = new("after_fifo", this);
+        sb_export_beforeFromDut         = new("sb_export_beforeFromDut", this);
+        sb_export_afterToDut            = new("sb_export_afterToDut", this);
+           before_fifo                  = new("before_fifo", this);
+        after_fifo                      = new("after_fifo", this);
     endfunction: build_phase
     function void connect_phase(uvm_phase phase);
         sb_export_beforeFromDut.connect(before_fifo.analysis_export);
@@ -1027,8 +1036,8 @@ class template_scoreboard extends uvm_scoreboard;
         // return $sformatf("addr");
     // endfunction
     virtual function void compare();
-    `uvm_info("FROMDUT", transaction_beforeFromDut.sprint(), UVM_LOW);
-    `uvm_info("TODUT", transaction_afterToDut.sprint(), UVM_LOW);
+    //`uvm_info("FROMDUT", transaction_beforeFromDut.sprint(), UVM_LOW);
+    //`uvm_info("TODUT", transaction_afterToDut.sprint(), UVM_LOW);
         if(transaction_beforeFromDut.out == transaction_afterToDut.out) begin
             `uvm_info("compare", {"Test: OK!"}, UVM_LOW);
         end else begin
@@ -1055,6 +1064,7 @@ class template_env extends uvm_env;
     rgb_agent                   frame_agent;    //[RGB]
     rgb_fc_subscriber           frame_fc_sub;   //[RGB]
     rgb_scoreboard              frame_sb;       //[RGB]
+
     function new(string name, uvm_component parent);
         super.new(name, parent);
     endfunction: new
@@ -1066,10 +1076,10 @@ class template_env extends uvm_env;
         frame_fc_sub    = rgb_fc_subscriber  ::type_id::create(.name("frame_fc_sub"),.parent(this));
         frame_sb        = rgb_scoreboard     ::type_id::create(.name("frame_sb"),.parent(this));
         if (!uvm_config_db#(virtual axiLite_if)::get(this, "", "axiLiteVif", axiLiteVif))
-        `uvm_fatal("NOVIF",{"virtual interface must be set for: ",get_full_name(),".axiLiteVif"});
+        	`uvm_fatal("NOVIF",{"virtual interface must be set for: ",get_full_name(),".axiLiteVif"});
         aL_agt          = axiLite_agent::type_id::create("aL_agt", this);
         if (!uvm_config_db#(virtual axiLite_if)::get(this, "", "axiLiteVif", axiLiteVif))
-        `uvm_fatal("NOVIF",{"virtual interface must be set for: ",get_full_name(),".axiLiteVif"});
+        	`uvm_fatal("NOVIF",{"virtual interface must be set for: ",get_full_name(),".axiLiteVif"});
         aL_fc_sub       = axiLite_fc_subscriber::type_id::create("aL_fc_sub", this);
     endfunction: build_phase
     function void connect_phase(uvm_phase phase);
@@ -1144,6 +1154,7 @@ class axiLite_test extends uvm_test;
         phase.drop_objection(.obj(this));
     endtask: run_phase
 endclass: axiLite_test
+
 // UVM_TEST : RGB_TEST [RGB]
 class rgb_test extends uvm_test;
     `uvm_component_utils(rgb_test)
@@ -1151,37 +1162,42 @@ class rgb_test extends uvm_test;
     function new(string name, uvm_component parent);
         super.new(name, parent);
     endfunction
+
     function void build_phase(uvm_phase phase);
         super.build_phase(phase);
-    begin
-    rgb_configuration frame_cfg;
-    frame_cfg = new;
-    assert(frame_cfg.randomize());
-    uvm_config_db#(rgb_configuration)::set(.cntxt(this),.inst_name("*"),.field_name("config"),.value(frame_cfg));
-    frame_env = template_env::type_id::create(.name("frame_env"),.parent(this));
-    end
+        begin
+        	rgb_configuration frame_cfg;
+        	frame_cfg = new;
+        	assert(frame_cfg.randomize());
+        	uvm_config_db#(rgb_configuration)::set(.cntxt(this),.inst_name("*"),.field_name("config"),.value(frame_cfg));
+        	frame_env = template_env::type_id::create(.name("frame_env"),.parent(this));
+        end
     endfunction: build_phase
+
     task run_phase(uvm_phase phase);
-    top_sequence    random_sqr;
-    uvm_component     component;
-    rgb_sequencer     sequencer;
-    random_sqr = top_sequence::type_id::create("random_sqr");
-    if( !random_sqr.randomize() ) 
-    `uvm_error("", "Randomize failed")
-    random_sqr.starting_phase = phase;
-    component = uvm_top.find("*.frame_seqr");
-    if ($cast(sequencer, component))
-    random_sqr.start(sequencer);
-    endtask
+        top_sequence        random_sqr;
+        uvm_component       component;
+        rgb_sequencer       sequencer;
+        random_sqr = top_sequence::type_id::create("random_sqr");
+        if( !random_sqr.randomize() ) 
+        	`uvm_error("", "Randomize failed")
+        random_sqr.starting_phase = phase;
+        component = uvm_top.find("*.frame_seqr");
+        if ($cast(sequencer, component))
+        	random_sqr.start(sequencer);
+    endtask: run_phase
 endclass: rgb_test
+
+// UVM_TEST : RGB_TEST2 [RGB]
 class rgb_test2 extends rgb_test;
     `uvm_component_utils(rgb_test2)
     function new (string name, uvm_component parent);
         super.new(name, parent);
     endfunction : new
+
     function void start_of_simulation_phase(uvm_phase phase);
-    super.start_of_simulation_phase(phase);
-    random_sequence_r1::type_id::set_type_override(random_sequence_r2::get_type());
+        super.start_of_simulation_phase(phase);
+        random_sequence_r1::type_id::set_type_override(random_sequence_r2::get_type());
     endfunction : start_of_simulation_phase
 endclass: rgb_test2
 
@@ -1198,7 +1214,7 @@ interface template_if;
     logic        sig_en_i;
     logic        sig_en_o;
     logic        sig_out;
-    modport templateSlave (input sig_clock,sig_ina,sig_inb,sig_en_i,output sig_en_o,sig_out);
+    modport      templateSlave (input sig_clock,sig_ina,sig_inb,sig_en_i,output sig_en_o,sig_out);
 endinterface: template_if
 // INTERFACE : AXILITE_IF [AXILITE]
 interface axiLite_if(input bit ACLK,ARESETN);
@@ -1221,7 +1237,7 @@ interface axiLite_if(input bit ACLK,ARESETN);
     logic [ 1:0]    RRESP;
     logic           RVALID;
     logic           RREADY;
-    modport ConfigMaster(input ACLK,ARESETN,AWADDR,AWPROT,AWVALID,WDATA,WSTRB,WVALID,BREADY,ARADDR,ARPROT,ARVALID,RREADY, output  AWREADY,ARREADY,RDATA,RRESP,RVALID,WREADY,BRESP,BVALID);
+    modport         ConfigMaster(input ACLK,ARESETN,AWADDR,AWPROT,AWVALID,WDATA,WSTRB,WVALID,BREADY,ARADDR,ARPROT,ARVALID,RREADY, output  AWREADY,ARREADY,RDATA,RRESP,RVALID,WREADY,BRESP,BVALID);
 endinterface: axiLite_if
 // INTERFACE : RGB_IF [RGB]
 interface rgb_if(input bit clk);
@@ -1331,17 +1347,17 @@ module top;
     rgb_if              frame_slave_if(clk);
     rgb_color           frame_color(frame_slave_if);// [RGB]
     initial begin
-    ARESETN = 1'b0;
+        ARESETN = 1'b0;
     #1000;
-    ARESETN = 1'b1;
+        ARESETN = 1'b1;
     end
     initial begin
-    ACLK = 0;
+        ACLK = 0;
     #5ns ;
     forever #5ns ACLK = ! ACLK;
     end
     initial begin
-    templateVif.sig_clock = 0;
+        templateVif.sig_clock = 0;
     #5ns ;
     forever #5ns templateVif.sig_clock = ! templateVif.sig_clock;
     end

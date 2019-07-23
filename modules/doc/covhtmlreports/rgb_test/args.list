@@ -1,0 +1,15 @@
+-html
+-htmldir
+../modules/doc/covhtmlreports/rgb_test
+-source
+-details
+-assert
+-directive
+-cvg
+-code
+bcefst
+-verbose
+-threshL
+50
+-threshH
+90

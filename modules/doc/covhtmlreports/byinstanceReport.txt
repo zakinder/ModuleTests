@@ -2007,27 +2007,27 @@ Statement Coverage for instance /top/frame_slave_if --
     Line         Item                      Count     Source 
     ----         ----                      -----     ------ 
   File ../modules/top.sv
-    1227                                             interface rgb_if(input bit clk);
-    1228                                                 logic [7:0]  iRed;
-    1229                                                 logic [7:0]  iGreen;
-    1230                                                 logic [7:0]  iBlue;
-    1231                                                 logic        iValid;
-    1232                                                 logic        iPixelEn;
-    1233                                                 logic        iEof;
-    1234                                                 int unsigned iX;
-    1235                                                 int unsigned iY;
-    1236                                                 logic [7:0]  oRed;
-    1237                                                 logic [7:0]  oGreen;
-    1238                                                 logic [7:0]  oBlue;
-    1239                                                 logic        oValid;
-    1240            1                          1         clocking master_cb @ (posedge clk);
-    1241                                                     default input #1step output #1ns;
-    1242                                                     output iPixelEn,iX,iY,iRed,iGreen,iBlue,iValid,iEof;
-    1243            1                          1             input  oRed;
-    1244                                                 endclocking: master_cb
-    1245            1                          1         clocking slave_cb @ (posedge clk);
-    1246                                                     default input #1step output #1ns;
-    1247            1                          1             input  iX,iY,iRed,iGreen,iBlue,iPixelEn,iValid,iEof;
+    1228                                             interface rgb_if(input bit clk);
+    1229                                                 logic [7:0]  iRed;
+    1230                                                 logic [7:0]  iGreen;
+    1231                                                 logic [7:0]  iBlue;
+    1232                                                 logic        iValid;
+    1233                                                 logic        iPixelEn;
+    1234                                                 logic        iEof;
+    1235                                                 int unsigned iX;
+    1236                                                 int unsigned iY;
+    1237                                                 logic [7:0]  oRed;
+    1238                                                 logic [7:0]  oGreen;
+    1239                                                 logic [7:0]  oBlue;
+    1240                                                 logic        oValid;
+    1241            1                          1         clocking master_cb @ (posedge clk);
+    1242                                                     default input #1step output #1ns;
+    1243                                                     output iPixelEn,iX,iY,iRed,iGreen,iBlue,iValid,iEof;
+    1244            1                          1             input  oRed;
+    1245                                                 endclocking: master_cb
+    1246            1                          1         clocking slave_cb @ (posedge clk);
+    1247                                                     default input #1step output #1ns;
+    1248            1                          1             input  iX,iY,iRed,iGreen,iBlue,iPixelEn,iValid,iEof;
 
 Branch Coverage:
     Enabled Coverage            Active      Hits    Misses % Covered
@@ -2708,49 +2708,49 @@ Statement Coverage for instance /top --
     Line         Item                      Count     Source 
     ----         ----                      -----     ------ 
   File ../modules/top.sv
-    1321                                             module top;
-    1322                                                 import uvm_pkg::*;
-    1323                                                 import socTest_pkg::*;
-    1324                                                 reg ACLK;
-    1325                                                 reg ARESETN;
-    1326                                                 reg clk;
-    1327                                                 axiLite_if          axiLiteVif(ACLK,ARESETN);
-    1328                                                 vfpConfigDut        vfpConfig_test(axiLiteVif); // [AXILITE]
-    1329                                                 template_if         templateVif();
-    1330                                                 adder               templateDut(templateVif);   // [TEMPLATE]
-    1331                                                 rgb_if              frame_slave_if(clk);
-    1332                                                 rgb_color           frame_color(frame_slave_if);// [RGB]
-    1333                                                 initial begin
-    1334            1                          1         ARESETN = 1'b0;
-    1335            1                          1         #1000;
-    1336            1                          1         ARESETN = 1'b1;
-    1337                                                 end
-    1338                                                 initial begin
-    1339            1                          1         ACLK = 0;
-    1340            1                          1         #5ns ;
-    1341            1                          1         forever #5ns ACLK = ! ACLK;
-    1341            2                        440     
-    1341            3                        439     
-    1342                                                 end
-    1343                                                 initial begin
-    1344            1                          1         templateVif.sig_clock = 0;
-    1345            1                          1         #5ns ;
-    1346            1                          1         forever #5ns templateVif.sig_clock = ! templateVif.sig_clock;
-    1346            2                        440     
-    1346            3                        439     
-    1347                                                 end
-    1348                                                 initial begin
-    1349            1                          1             clk = 0;
-    1350            1                          1             #5ns ;
-    1351            1                          1             forever #5ns clk = ! clk;
-    1351            2                        440     
-    1351            3                        439     
-    1352                                                 end
-    1353                                                 initial begin
-    1354            1                          1         uvm_config_db #(virtual axiLite_if)::set(null, "*", "axiLiteVif", axiLiteVif);
-    1355            1                          1         uvm_resource_db#(virtual template_if)::set(.scope("ifs"), .name("template_if"), .val(templateVif));
-    1356            1                          1         uvm_resource_db#(virtual rgb_if)::set(.scope("ifs"),.name("rgb_if"),.val(frame_slave_if));
-    1357            1                          1         run_test();
+    1322                                             module top;
+    1323                                                 import uvm_pkg::*;
+    1324                                                 import socTest_pkg::*;
+    1325                                                 reg ACLK;
+    1326                                                 reg ARESETN;
+    1327                                                 reg clk;
+    1328                                                 axiLite_if          axiLiteVif(ACLK,ARESETN);
+    1329                                                 vfpConfigDut        vfpConfig_test(axiLiteVif); // [AXILITE]
+    1330                                                 template_if         templateVif();
+    1331                                                 adder               templateDut(templateVif);   // [TEMPLATE]
+    1332                                                 rgb_if              frame_slave_if(clk);
+    1333                                                 rgb_color           frame_color(frame_slave_if);// [RGB]
+    1334                                                 initial begin
+    1335            1                          1             ARESETN = 1'b0;
+    1336            1                          1         #1000;
+    1337            1                          1             ARESETN = 1'b1;
+    1338                                                 end
+    1339                                                 initial begin
+    1340            1                          1             ACLK = 0;
+    1341            1                          1         #5ns ;
+    1342            1                          1         forever #5ns ACLK = ! ACLK;
+    1342            2                        440     
+    1342            3                        439     
+    1343                                                 end
+    1344                                                 initial begin
+    1345            1                          1             templateVif.sig_clock = 0;
+    1346            1                          1         #5ns ;
+    1347            1                          1         forever #5ns templateVif.sig_clock = ! templateVif.sig_clock;
+    1347            2                        440     
+    1347            3                        439     
+    1348                                                 end
+    1349                                                 initial begin
+    1350            1                          1             clk = 0;
+    1351            1                          1             #5ns ;
+    1352            1                          1             forever #5ns clk = ! clk;
+    1352            2                        440     
+    1352            3                        439     
+    1353                                                 end
+    1354                                                 initial begin
+    1355            1                          1         uvm_config_db #(virtual axiLite_if)::set(null, "*", "axiLiteVif", axiLiteVif);
+    1356            1                          1         uvm_resource_db#(virtual template_if)::set(.scope("ifs"), .name("template_if"), .val(templateVif));
+    1357            1                          1         uvm_resource_db#(virtual rgb_if)::set(.scope("ifs"),.name("rgb_if"),.val(frame_slave_if));
+    1358            1                          1         run_test();
 
 Branch Coverage:
     Enabled Coverage            Active      Hits    Misses % Covered
@@ -2798,8 +2798,8 @@ Assertion Coverage:
 Name                 File(Line)           Failure Pass 
                                           Count   Count 
 -------------------------------------------------------
-/socTest_pkg/rgb_test/build_phase/#ublk#215236535#1156/immed__1159
-                     ../modules/top.sv(1159)       0     1
+/socTest_pkg/rgb_test/build_phase/#ublk#215236535#1157/immed__1160
+                     ../modules/top.sv(1160)       0     1
 
 =================================================================================
 === Instance: /socTest_pkg
@@ -4304,8 +4304,8 @@ Name                 File(Line)           Failure Pass
 -------------------------------------------------------
 /socTest_pkg/random_sequence_r2/body/random_loop/immed__188
                      ../modules/top.sv(188)       0     1
-/socTest_pkg/rgb_test/build_phase/#ublk#215236535#1156/immed__1159
-                     ../modules/top.sv(1159)       0     1
+/socTest_pkg/rgb_test/build_phase/#ublk#215236535#1157/immed__1160
+                     ../modules/top.sv(1160)       0     1
 
 Total Coverage By Instance (filtered view): 24.7%
 

@@ -1,0 +1,5 @@
+var g_data = {'dummy':null,
+'4':'../modules/dut/pixelCord.vhd',
+'3':'../modules/dut/template.v',
+'1':'../modules/dut/vfpConfig.vhd',
+'2':'../modules/top.sv'};
