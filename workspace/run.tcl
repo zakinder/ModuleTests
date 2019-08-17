@@ -36,6 +36,18 @@ coverage save rgb_test.ucdb
 vcover report rgb_test.ucdb -cvg -details
 coverage report -html -htmldir ../modules/doc/covhtmlreports/rgb_test -source -details -assert -directive -cvg -code bcefst -verbose -threshL 50 -threshH 90
 coverage report -file ../modules/doc/covhtmlreports/rgb_test.txt -byfile -totals -assert -directive -cvg -codeAll
+# TEST rgb_test1
+vsim top_optimized -coverage +UVM_TESTNAME=rgb_test1
+set NoQuitOnFinish 1
+onbreak {resume}
+log /* -r
+run -all
+coverage attribute -name TESTNAME -value rgb_test1
+coverage save rgb_test1.ucdb
+vcover report rgb_test1.ucdb -cvg -details
+coverage report -html -htmldir ../modules/doc/covhtmlreports/rgb_test1 -source -details -assert -directive -cvg -code bcefst -verbose -threshL 50 -threshH 90
+coverage report -file ../modules/doc/covhtmlreports/rgb_test1.txt -byfile -totals -assert -directive -cvg -codeAll
+
 # TEST rgb_test2
 vsim top_optimized -coverage +UVM_TESTNAME=rgb_test2
 set NoQuitOnFinish 1
@@ -50,7 +62,7 @@ coverage report -file ../modules/doc/covhtmlreports/rgb_test2.txt -byfile -total
 
 
 # VCOVER MERGE
-vcover merge  SystemCoverage.ucdb template_test.ucdb axiLite_test.ucdb rgb_test.ucdb rgb_test2.ucdb
+vcover merge  SystemCoverage.ucdb template_test.ucdb axiLite_test.ucdb rgb_test.ucdb rgb_test1.ucdb rgb_test2.ucdb
 vcover report SystemCoverage.ucdb -cvg -details
 add testbrowser SystemCoverage.ucdb
 vcover report -html -htmldir ../modules/doc/covhtmlreports/SystemCoverage -source -details -assert -directive -cvg -code bcefst -verbose -threshL 50 -threshH 90 SystemCoverage.ucdb

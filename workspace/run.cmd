@@ -40,8 +40,10 @@ rd work /s /q
 :TEST1
 vsim -c -do rgb_test.tcl
 Powershell.exe -executionpolicy remotesigned -File rgb_test.ps1 
+vsim -c -do rgb_test1.tcl
+Powershell.exe -executionpolicy remotesigned -File rgb_test1.ps1 
 vsim -c -do rgb_test2.tcl
-Powershell.exe -executionpolicy remotesigned -File rgb_test2.ps1 
+Powershell.exe -executionpolicy remotesigned -File rgb_test2.ps1
 @GOTO WHAT
 :TEST2
 vsim -c -do axiLite_test.tcl

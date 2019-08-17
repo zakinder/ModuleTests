@@ -1,6 +1,6 @@
 var g_db_data = [
 {dummy:0},
-{name:'template_cg',f:1,type:6,id:1021,tb:'24',h:'0',m:'24',hp:'0.00%',cov:['0.00%','R'],g:'100.00%',gp:['0.00%','R'],opts:[[],['merge_instance','auto(true)']],lnk:'__HDL_srcfile_2.htm#689',hdlPath:'/socTest_pkg/template_monitor_afterToDut',parent:'1020'},
-{name:'aL_cg',f:1,type:6,id:1031,tb:'128',h:'0',m:'128',hp:'0.00%',cov:['0.00%','R'],g:'100.00%',gp:['0.00%','R'],opts:[[],['merge_instance','auto(true)']],lnk:'__HDL_srcfile_2.htm#913',hdlPath:'/socTest_pkg/axiLite_fc_subscriber',parent:'1030'},
-{name:'rgb_cg',f:1,type:6,id:1035,tb:'454',h:'346',m:'108',hp:'76.21%',cov:['86.28%','Y'],g:'100.00%',gp:['86.28%','Y'],opts:[[],['merge_instance','auto(true)']],lnk:'__HDL_srcfile_2.htm#934',hdlPath:'/socTest_pkg/rgb_fc_subscriber',parent:'1034'}];
+{name:'template_cg',f:1,type:6,id:1101,tb:'24',h:'0',m:'24',hp:'0.00%',cov:['0.00%','R'],g:'100.00%',gp:['0.00%','R'],opts:[[],['merge_instance','auto(true)']],lnk:'__HDL_srcfile_2.htm#702',hdlPath:'/socTest_pkg/template_monitor_afterToDut',parent:'1100'},
+{name:'aL_cg',f:1,type:6,id:1117,tb:'128',h:'0',m:'128',hp:'0.00%',cov:['0.00%','R'],g:'100.00%',gp:['0.00%','R'],opts:[[],['merge_instance','auto(true)']],lnk:'__HDL_srcfile_2.htm#931',hdlPath:'/socTest_pkg/axiLite_fc_subscriber',parent:'1116'},
+{name:'rgb_cg',f:1,type:6,id:1121,tb:'454',h:'354',m:'100',hp:'77.97%',cov:['86.63%','Y'],g:'100.00%',gp:['86.63%','Y'],opts:[[],['merge_instance','auto(true)']],lnk:'__HDL_srcfile_2.htm#952',hdlPath:'/socTest_pkg/rgb_fc_subscriber',parent:'1120'}];
 processConsCovergroupsData(g_db_data);

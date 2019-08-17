@@ -323,13 +323,13 @@ c14:[{dummy:0}
 ,{}
 ,{z:'(iCord.y = grid4Cord.top)',c:'r',r:'\'_1\' not hit',i:'Hit \'_1\''}
 ,{z:'(iCord.x >= grid4Cord.lft)',c:'r',r:'No hits',i:'Hit \'_0\' and \'_1\''}
-,{z:'(iCord.x <= grid4Cord.rht)',c:'r',r:'No hits',i:'Hit \'_0\' and \'_1\''}
+,{z:'(iCord.x <= grid4Cord.rht)',c:'r',r:'\'_1\' not hit',i:'Hit \'_1\''}
 ,{}
 ,{n:'1',z:'(iCord.y = grid4Cord.top)_0',h1:'1',t:'c',c1:'-'}
 ,{n:'2',z:'(iCord.y = grid4Cord.top)_1',h1:'0',t:'c',c1:'((iCord.x >= grid4Cord.lft) and (iCord.x <= grid4Cord.rht))'}
 ,{n:'3',z:'(iCord.x >= grid4Cord.lft)_0',h1:'0',t:'c',c1:'(iCord.y = grid4Cord.top)'}
 ,{n:'4',z:'(iCord.x >= grid4Cord.lft)_1',h1:'0',t:'c',c1:'(iCord.y = grid4Cord.top) && (iCord.x <= grid4Cord.rht)'}
-,{n:'5',z:'(iCord.x <= grid4Cord.rht)_0',h1:'0',t:'c',c1:'(iCord.y = grid4Cord.top) && (iCord.x >= grid4Cord.lft)'}
+,{n:'5',z:'(iCord.x <= grid4Cord.rht)_0',h1:'1',t:'c',c1:'(iCord.y = grid4Cord.top) && (iCord.x >= grid4Cord.lft)'}
 ,{n:'6',z:'(iCord.x <= grid4Cord.rht)_1',h1:'0',t:'c',c1:'(iCord.y = grid4Cord.top) && (iCord.x >= grid4Cord.lft)'}
 ]}
 ,{anchor:'cvg166',cr:'m',items:[{s:'3',x:'FC',lnk:'__HDL_srcfile_4.htm#116',z:'((iCord.x = grid4Cord.lft) and ((iCord.y >= grid4Cord.top) and (iCord.y <= grid4Cord.bot)))',c:'R',p:'0.00',d:'0',F:'1'}
@@ -533,13 +533,13 @@ c146:[{dummy:0}
 ,{}
 ,{z:'(iCord.y = grid4Cord.top)',c:'r',r:'\'_1\' not hit',i:'Hit \'_1\''}
 ,{z:'(iCord.x >= grid4Cord.lft)',c:'r',r:'No hits',i:'Hit \'_0\' and \'_1\''}
-,{z:'(iCord.x <= grid4Cord.rht)',c:'r',r:'No hits',i:'Hit \'_0\' and \'_1\''}
+,{z:'(iCord.x <= grid4Cord.rht)',c:'r',r:'\'_1\' not hit',i:'Hit \'_1\''}
 ,{}
 ,{n:'1',z:'(iCord.y = grid4Cord.top)_0',h1:'1',t:'c',c1:'-'}
 ,{n:'2',z:'(iCord.y = grid4Cord.top)_1',h1:'0',t:'c',c1:'((iCord.x >= grid4Cord.lft) and (iCord.x <= grid4Cord.rht))'}
 ,{n:'3',z:'(iCord.x >= grid4Cord.lft)_0',h1:'0',t:'c',c1:'(iCord.y = grid4Cord.top)'}
 ,{n:'4',z:'(iCord.x >= grid4Cord.lft)_1',h1:'0',t:'c',c1:'(iCord.y = grid4Cord.top) && (iCord.x <= grid4Cord.rht)'}
-,{n:'5',z:'(iCord.x <= grid4Cord.rht)_0',h1:'0',t:'c',c1:'(iCord.y = grid4Cord.top) && (iCord.x >= grid4Cord.lft)'}
+,{n:'5',z:'(iCord.x <= grid4Cord.rht)_0',h1:'1',t:'c',c1:'(iCord.y = grid4Cord.top) && (iCord.x >= grid4Cord.lft)'}
 ,{n:'6',z:'(iCord.x <= grid4Cord.rht)_1',h1:'0',t:'c',c1:'(iCord.y = grid4Cord.top) && (iCord.x >= grid4Cord.lft)'}
 ]}
 ,{anchor:'cvg166',cr:'m',items:[{s:'3',x:'FC',lnk:'__HDL_srcfile_4.htm#116',z:'((iCord.x = grid4Cord.lft) and ((iCord.y >= grid4Cord.top) and (iCord.y <= grid4Cord.bot)))',c:'R',p:'0.00',d:'0',F:'1'}
