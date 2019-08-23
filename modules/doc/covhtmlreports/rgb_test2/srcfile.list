@@ -1,4 +1,6 @@
+../modules/dut/VFP_v1_0.vhd
 ../modules/dut/pixelCord.vhd
 ../modules/dut/template.v
 ../modules/dut/vfpConfig.vhd
+../modules/dut/vfpMaxisMM2s.vhd
 ../modules/top.sv

@@ -1,9 +1,18 @@
+# ====================================================================================
+# ------------------------------------------------------------------------------------
+# --------------------------------- RUN
+# ------------------------------------------------------------------------------------
+# ====================================================================================
 vlib work
 vcom -f dut_vhd.f
 vlog -f dut_vlg.f
 vlog -f tb.f
 vopt top -o top_optimized  +acc +cover=sbfec+top(rtl).
-# TEST template_test
+# ====================================================================================
+# ------------------------------------------------------------------------------------
+# --------------------------------- TEST template_test
+# ------------------------------------------------------------------------------------
+# ====================================================================================
 vsim top_optimized -coverage +UVM_TESTNAME=template_test
 set NoQuitOnFinish 1
 onbreak {resume}
@@ -14,7 +23,11 @@ coverage save template_test.ucdb
 vcover report template_test.ucdb -cvg -details
 coverage report -html -htmldir ../modules/doc/covhtmlreports/template_test -source -details -assert -directive -cvg -code bcefst -verbose -threshL 50 -threshH 90
 coverage report -file ../modules/doc/covhtmlreports/template_test.txt -byfile -totals -assert -directive -cvg -codeAll
-# TEST axiLite_test
+# ====================================================================================
+# ------------------------------------------------------------------------------------
+# --------------------------------- TEST axiLite_test
+# ------------------------------------------------------------------------------------
+# ====================================================================================
 vsim top_optimized -coverage +UVM_TESTNAME=axiLite_test
 set NoQuitOnFinish 1
 onbreak {resume}
@@ -25,7 +38,11 @@ coverage save axiLite_test.ucdb
 vcover report axiLite_test.ucdb -cvg -details
 coverage report -html -htmldir ../modules/doc/covhtmlreports/axiLite_test -source -details -assert -directive -cvg -code bcefst -verbose -threshL 50 -threshH 90
 coverage report -file ../modules/doc/covhtmlreports/axiLite_test.txt -byfile -totals -assert -directive -cvg -codeAll
-# TEST rgb_test
+# ====================================================================================
+# ------------------------------------------------------------------------------------
+# --------------------------------- TEST rgb_test
+# ------------------------------------------------------------------------------------
+# ====================================================================================
 vsim top_optimized -coverage +UVM_TESTNAME=rgb_test
 set NoQuitOnFinish 1
 onbreak {resume}
@@ -36,7 +53,11 @@ coverage save rgb_test.ucdb
 vcover report rgb_test.ucdb -cvg -details
 coverage report -html -htmldir ../modules/doc/covhtmlreports/rgb_test -source -details -assert -directive -cvg -code bcefst -verbose -threshL 50 -threshH 90
 coverage report -file ../modules/doc/covhtmlreports/rgb_test.txt -byfile -totals -assert -directive -cvg -codeAll
-# TEST rgb_test1
+# ====================================================================================
+# ------------------------------------------------------------------------------------
+# --------------------------------- TEST rgb_test1
+# ------------------------------------------------------------------------------------
+# ====================================================================================
 vsim top_optimized -coverage +UVM_TESTNAME=rgb_test1
 set NoQuitOnFinish 1
 onbreak {resume}
@@ -47,8 +68,11 @@ coverage save rgb_test1.ucdb
 vcover report rgb_test1.ucdb -cvg -details
 coverage report -html -htmldir ../modules/doc/covhtmlreports/rgb_test1 -source -details -assert -directive -cvg -code bcefst -verbose -threshL 50 -threshH 90
 coverage report -file ../modules/doc/covhtmlreports/rgb_test1.txt -byfile -totals -assert -directive -cvg -codeAll
-
-# TEST rgb_test2
+# ====================================================================================
+# ------------------------------------------------------------------------------------
+# --------------------------------- TEST rgb_test2
+# ------------------------------------------------------------------------------------
+# ====================================================================================
 vsim top_optimized -coverage +UVM_TESTNAME=rgb_test2
 set NoQuitOnFinish 1
 onbreak {resume}
@@ -59,10 +83,27 @@ coverage save rgb_test2.ucdb
 vcover report rgb_test2.ucdb -cvg -details
 coverage report -html -htmldir ../modules/doc/covhtmlreports/rgb_test2 -source -details -assert -directive -cvg -code bcefst -verbose -threshL 50 -threshH 90
 coverage report -file ../modules/doc/covhtmlreports/rgb_test2.txt -byfile -totals -assert -directive -cvg -codeAll
-
-
-# VCOVER MERGE
-vcover merge  SystemCoverage.ucdb template_test.ucdb axiLite_test.ucdb rgb_test.ucdb rgb_test1.ucdb rgb_test2.ucdb
+# ====================================================================================
+# ------------------------------------------------------------------------------------
+# --------------------------------- TEST axi4_stream_test
+# ------------------------------------------------------------------------------------
+# ====================================================================================
+vsim top_optimized -coverage +UVM_TESTNAME=axi4_stream_test
+set NoQuitOnFinish 1
+onbreak {resume}
+log /* -r
+run -all
+coverage attribute -name TESTNAME -value axi4_stream_test
+coverage save axi4_stream_test.ucdb
+vcover report axi4_stream_test.ucdb -cvg -details
+coverage report -html -htmldir ../modules/doc/covhtmlreports/axi4_stream_test -source -details -assert -directive -cvg -code bcefst -verbose -threshL 50 -threshH 90
+coverage report -file ../modules/doc/covhtmlreports/axi4_stream_test.txt -byfile -totals -assert -directive -cvg -codeAll
+# ====================================================================================
+# ------------------------------------------------------------------------------------
+# --------------------------------- VCOVER MERGE
+# ------------------------------------------------------------------------------------
+# ====================================================================================
+vcover merge  SystemCoverage.ucdb template_test.ucdb axiLite_test.ucdb rgb_test.ucdb rgb_test1.ucdb rgb_test2.ucdb axi4_stream_test.ucdb
 vcover report SystemCoverage.ucdb -cvg -details
 add testbrowser SystemCoverage.ucdb
 vcover report -html -htmldir ../modules/doc/covhtmlreports/SystemCoverage -source -details -assert -directive -cvg -code bcefst -verbose -threshL 50 -threshH 90 SystemCoverage.ucdb

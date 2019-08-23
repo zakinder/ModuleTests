@@ -1,5 +1,7 @@
 var g_data = {'dummy':null,
-'4':'../modules/dut/pixelCord.vhd',
-'3':'../modules/dut/template.v',
-'1':'../modules/dut/vfpConfig.vhd',
-'2':'../modules/top.sv'};
+'4':'../modules/dut/VFP_v1_0.vhd',
+'6':'../modules/dut/pixelCord.vhd',
+'2':'../modules/dut/template.v',
+'3':'../modules/dut/vfpConfig.vhd',
+'5':'../modules/dut/vfpMaxisMM2s.vhd',
+'1':'../modules/top.sv'};

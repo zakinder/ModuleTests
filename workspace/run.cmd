@@ -1,3 +1,8 @@
+@REM ====================================================================================
+@REM ------------------------------------------------------------------------------------
+@REM --------------------------------- RUN CMD
+@REM ------------------------------------------------------------------------------------
+@REM ====================================================================================
 %~d1
 @echo off
 del *.ucdb *.wlf *.log *.htm *.opt *.contrib *.noncontrib *.rank *.vstf
@@ -5,33 +10,36 @@ rd work /s /q
 @REM rd ..\modules\doc\covhtmlreports\template_test /s /q
 @REM rd ..\modules\doc\covhtmlreports\axiLite_test /s /q
 @REM rd ..\modules\doc\covhtmlreports\rgb_test /s /q
+@REM rd ..\modules\doc\covhtmlreports\axi4_stream_test /s /q
 @REM rd ..\modules\doc\covhtmlreports\SystemCoverage /s /q
 
 
 :WHAT
-
 @echo ------------------
 @echo 1-rgb_test
 @echo 2-axiLite_test
 @echo 3-template_test
-@echo 4-runAll
-@echo 5-rgb_test Coverage Report
-@echo 6-axiLite_test Coverage Report
-@echo 7-template_test Coverage Report
-@echo 8-AllMerged Coverage Report
-@echo 9-CleanAll
-
+@echo 4-axi4_stream_test
+@echo 5-runAll
+@echo 11-rgb_test Coverage Report
+@echo 12-axiLite_test Coverage Report
+@echo 13-template_test Coverage Report
+@echo 14-template_test Coverage Report
+@echo 15-AllMerged Coverage Report
+@echo 100-CleanAll
 @echo ------------------
 @set /p Select=" CMD "
 @if "%Select%"=="1" (@GOTO TEST1)
 @if "%Select%"=="2" (@GOTO TEST2)
 @if "%Select%"=="3" (@GOTO TEST3)
 @if "%Select%"=="4" (@GOTO TEST4)
-@if "%Select%"=="5" (@GOTO TEST1HTML)
-@if "%Select%"=="6" (@GOTO TEST2HTML)
-@if "%Select%"=="7" (@GOTO TEST3HTML)
-@if "%Select%"=="8" (@GOTO TEST4HTML)
-@if "%Select%"=="9" (@GOTO CLEAN_ALL)
+@if "%Select%"=="5" (@GOTO TEST5)
+@if "%Select%"=="11" (@GOTO TEST1HTML)
+@if "%Select%"=="12" (@GOTO TEST2HTML)
+@if "%Select%"=="13" (@GOTO TEST3HTML)
+@if "%Select%"=="14" (@GOTO TEST4HTML)
+@if "%Select%"=="15" (@GOTO TEST5HTML)
+@if "%Select%"=="100" (@GOTO CLEAN_ALL)
 @GOTO WHAT
 
 
@@ -54,9 +62,15 @@ vsim -c -do template_test.tcl
 Powershell.exe -executionpolicy remotesigned -File template_test.ps1
 @GOTO WHAT
 :TEST4
+vsim -c -do axi4_stream_test.tcl
+Powershell.exe -executionpolicy remotesigned -File axi4_stream_test.ps1
+@GOTO WHAT
+:TEST5
 vsim -c -do run.tcl
 Powershell.exe -executionpolicy remotesigned -File SystemCoverage.ps1
 @GOTO WHAT
+
+
 
 :TEST1HTML
 Powershell.exe -executionpolicy remotesigned -File rgb_test.ps1
@@ -68,16 +82,21 @@ Powershell.exe -executionpolicy remotesigned -File axiLite_test.ps1
 Powershell.exe -executionpolicy remotesigned -File template_test.ps1
 @GOTO WHAT
 :TEST4HTML
+Powershell.exe -executionpolicy remotesigned -File axi4_stream_test.ps1
+@GOTO WHAT
+:TEST5HTML
 Powershell.exe -executionpolicy remotesigned -File SystemCoverage.ps1
 @GOTO WHAT
 
 :CLEAN_ALL
 del *.ucdb *.wlf *.log *.htm *.opt *.contrib *.noncontrib *.rank *.vstf *.txt transcript
 rd work /s /q
-rd ..\modules\doc\covhtmlreports\template_test /s /q
-rd ..\modules\doc\covhtmlreports\axiLite_test /s /q
 rd ..\modules\doc\covhtmlreports\rgb_test /s /q
+rd ..\modules\doc\covhtmlreports\rgb_test1 /s /q
 rd ..\modules\doc\covhtmlreports\rgb_test2 /s /q
+rd ..\modules\doc\covhtmlreports\axiLite_test /s /q
+rd ..\modules\doc\covhtmlreports\template_test /s /q
+rd ..\modules\doc\covhtmlreports\axi4_stream_test /s /q
 rd ..\modules\doc\covhtmlreports\SystemCoverage /s /q
 @GOTO WHAT
 
