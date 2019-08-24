@@ -3,7 +3,7 @@ module template(input wire clk,
 		   input wire ina,
 		   input wire inb,
 		   output reg en_o,
-		   output reg out);
+		   output reg out_c);
 	integer counter, state;
 	reg[1:0] temp_a, temp_b;
 	reg[2:0] temp_out;
@@ -13,7 +13,7 @@ module template(input wire clk,
 		temp_a = 2'b00;
 		temp_b = 2'b00;
 		temp_out = 3'b000;
-		out = 1;
+		out_c = 1;
 		en_o <= 0;
 		state = 0;
 	end
@@ -40,14 +40,14 @@ module template(input wire clk,
 			end
 			//State 2: Enable en_o and sends result to the output
 			2: begin
-				out <= temp_out[2];
+				out_c <= temp_out[2];
 				temp_out = temp_out << 1;
 				counter = counter + 1;
 				if(counter==3) en_o <= 1'b1;
 				if(counter==4) en_o <= 1'b0;
 				if(counter==6) begin
 					counter = 0;
-					out <= 1'b1;
+					out_c <= 1'b1;
 					state = 0;
 				end
 			end

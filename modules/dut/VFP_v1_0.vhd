@@ -4,6 +4,7 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use work.constantspackage.all;
 use work.vpfRecords.all;
+use work.portspackage.all;
 entity VFP_v1_0 is
     port (
     -- d5m input
@@ -63,78 +64,64 @@ entity VFP_v1_0 is
     vfpconfig_rready          : in std_logic);
 end VFP_v1_0;
 architecture arch_imp of VFP_v1_0 is
-    constant s_data_width        : integer := 16;
-component vfpConfig is
-port (
-        ACLK               : in std_logic;
-        ARESETN            : in std_logic;
-        AWADDR             : in std_logic_vector(7 downto 0);
-        AWPROT             : in std_logic_vector(2 downto 0);
-        AWVALID            : in std_logic;
-        AWREADY            : out std_logic;
-        WDATA              : in std_logic_vector(31 downto 0);
-        WSTRB              : in std_logic_vector(3 downto 0);
-        WVALID             : in std_logic;
-        WREADY             : out std_logic;
-        BRESP              : out std_logic_vector(1 downto 0);
-        BVALID             : out std_logic;
-        BREADY             : in std_logic;
-        ARADDR             : in std_logic_vector(7 downto 0);
-        ARPROT             : in std_logic_vector(2 downto 0);
-        ARVALID            : in std_logic;
-        ARREADY            : out std_logic;
-        RDATA              : out std_logic_vector(31 downto 0);
-        RRESP              : out std_logic_vector(1 downto 0);
-        RVALID             : out std_logic;
-        RREADY             : in std_logic);
-end component vfpConfig;
-component videoProcess_v1_0_m_axis_mm2s is
-generic (
-    s_data_width                : integer := 16);
-port (
-    aclk                        : in std_logic;
-    aresetn                     : in std_logic;
-    rgb_s_axis_tready           : out std_logic;
-    rgb_s_axis_tvalid           : in std_logic;
-    rgb_s_axis_tuser            : in std_logic;
-    rgb_s_axis_tlast            : in std_logic;
-    rgb_s_axis_tdata            : in std_logic_vector(s_data_width-1  downto 0);
-    m_axis_mm2s_tkeep           : out std_logic_vector(2 downto 0);
-    m_axis_mm2s_tstrb           : out std_logic_vector(2 downto 0);
-    m_axis_mm2s_tid             : out std_logic_vector(0 downto 0);
-    m_axis_mm2s_tdest           : out std_logic_vector(0 downto 0);  
-    m_axis_mm2s_tready          : in std_logic;
-    m_axis_mm2s_tvalid          : out std_logic;
-    m_axis_mm2s_tuser           : out std_logic;
-    m_axis_mm2s_tlast           : out std_logic;
-    m_axis_mm2s_tdata           : out std_logic_vector(s_data_width-1 downto 0));
-end component videoProcess_v1_0_m_axis_mm2s;
-
-
+    constant revision_number           : std_logic_vector(31 downto 0) := x"05062019";
+    constant C_rgb_m_axis_TDATA_WIDTH  : integer := 16;
+    constant C_rgb_m_axis_START_COUNT  : integer := 32;
+    constant C_rgb_s_axis_TDATA_WIDTH  : integer := 16;
+    constant C_m_axis_mm2s_TDATA_WIDTH : integer := 16;
+    constant C_m_axis_mm2s_START_COUNT : integer := 32;
+    constant C_vfpConfig_DATA_WIDTH    : integer := 32;
+    constant C_vfpConfig_ADDR_WIDTH    : integer := 8;
+    constant conf_data_width           : integer := 32;
+    constant conf_addr_width           : integer := 8;
+    constant i_data_width              : integer := 8;
+    constant s_data_width              : integer := 16;
+    constant b_data_width              : integer := 32;
+    constant i_precision               : integer := 12;
+    constant i_full_range              : boolean := FALSE;
+    constant img_width                 : integer := 4096;
+    constant dataWidth                 : integer := 12;
+    constant addrWidth                 : integer := 12;
+    constant adwrWidth                 : integer := 16;
+    signal rawData                     : rData;
+    signal rgbSet                      : rRgb;
+    signal oWrRegs                     : mRegs;
+    signal iRdRegs                     : mRegs;
+    signal wrRegs                      : mRegs;
+    signal rdRegs                      : mRegs;
+    signal streamData                  : vStreamData;
+    signal aBusSelect                  : std_logic_vector(vfpconfig_wdata'range):= (others => '0');
 begin
-vfpConfigInst: vfpConfig
+CameraRawToRgbInst: CameraRawToRgb
+generic map(
+    img_width                 => img_width,
+    dataWidth                 => dataWidth,
+    addrWidth                 => addrWidth)
 port map(
-    ACLK           => vfpconfig_aclk,
-    ARESETN        => vfpconfig_aresetn,
-    AWADDR         => vfpconfig_awaddr,
-    AWPROT         => vfpconfig_awprot,
-    AWVALID        => vfpconfig_awvalid,
-    AWREADY        => vfpconfig_awready,
-    WDATA          => vfpconfig_wdata,
-    WSTRB          => vfpconfig_wstrb,
-    WVALID         => vfpconfig_wvalid,
-    WREADY         => vfpconfig_wready,
-    BRESP          => vfpconfig_bresp,
-    BVALID         => vfpconfig_bvalid,
-    BREADY         => vfpconfig_bready,
-    ARADDR         => vfpconfig_araddr,
-    ARPROT         => vfpconfig_arprot,
-    ARVALID        => vfpconfig_arvalid,
-    ARREADY        => vfpconfig_arready,
-    RDATA          => vfpconfig_rdata,
-    RRESP          => vfpconfig_rresp,
-    RVALID         => vfpconfig_rvalid,
-    RREADY         => vfpconfig_rready);
+    m_axis_mm2s_aclk          => vfpconfig_aclk,
+    m_axis_mm2s_aresetn       => vfpconfig_aresetn,
+    pixclk                    => pixclk,
+    ifval                     => ifval,
+    ilval                     => ilval,
+    idata                     => idata,
+    oRgbSet                   => rgbSet);
+VideoStreamInst: VideoStream
+generic map(
+    revision_number           => revision_number,
+    i_data_width              => i_data_width,
+    s_data_width              => s_data_width,
+    b_data_width              => b_data_width,
+    img_width                 => img_width,
+    adwrWidth                 => adwrWidth,
+    addrWidth                 => addrWidth)
+port map(
+    m_axis_mm2s_aclk          => m_axis_mm2s_aclk,
+    m_axis_mm2s_aresetn       => m_axis_mm2s_aresetn,
+    iWrRegs                   => wrRegs,
+    oRdRegs                   => rdRegs,
+    iRgbSet                   => rgbSet,
+    oStreamData               => streamData,
+    oBusSelect                => aBusSelect);
 mm2sInst: videoProcess_v1_0_m_axis_mm2s
 generic map(
     s_data_width         => s_data_width)
@@ -155,4 +142,72 @@ port map(
     m_axis_mm2s_tuser    => m_axis_mm2s_tuser,
     m_axis_mm2s_tlast    => m_axis_mm2s_tlast,    
     m_axis_mm2s_tdata    => m_axis_mm2s_tdata);
+AxisExternalInst: AxisExternal
+generic map(
+    revision_number           => revision_number,
+    C_rgb_m_axis_TDATA_WIDTH  => C_rgb_m_axis_TDATA_WIDTH,
+    C_rgb_s_axis_TDATA_WIDTH  => C_rgb_s_axis_TDATA_WIDTH,
+    C_m_axis_mm2s_TDATA_WIDTH => C_m_axis_mm2s_TDATA_WIDTH,
+    C_vfpConfig_DATA_WIDTH    => C_vfpConfig_DATA_WIDTH,
+    C_vfpConfig_ADDR_WIDTH    => C_vfpConfig_ADDR_WIDTH,
+    conf_data_width           => conf_data_width,
+    conf_addr_width           => conf_addr_width,
+    i_data_width              => i_data_width,
+    s_data_width              => s_data_width,
+    b_data_width              => b_data_width)
+port map(
+    iBusSelect                => aBusSelect,
+    iStreamData               => streamData,
+    oWrRegs                   => wrRegs,
+    iRdRegs                   => rdRegs,
+    --tx channel
+    rgb_m_axis_aclk           => rgb_m_axis_aclk,
+    rgb_m_axis_aresetn        => rgb_m_axis_aresetn,
+    rgb_m_axis_tready         => rgb_m_axis_tready,
+    rgb_m_axis_tvalid         => rgb_m_axis_tvalid,
+    rgb_m_axis_tlast          => rgb_m_axis_tlast,
+    rgb_m_axis_tuser          => rgb_m_axis_tuser,
+    rgb_m_axis_tdata          => rgb_m_axis_tdata,
+    --rx channel
+    rgb_s_axis_aclk           => rgb_s_axis_aclk,
+    rgb_s_axis_aresetn        => rgb_s_axis_aresetn,
+    rgb_s_axis_tready         => rgb_s_axis_tready,
+    rgb_s_axis_tvalid         => rgb_s_axis_tvalid,
+    rgb_s_axis_tuser          => rgb_s_axis_tuser,
+    rgb_s_axis_tlast          => rgb_s_axis_tlast,
+    rgb_s_axis_tdata          => rgb_s_axis_tdata,
+    --destination channel
+    m_axis_mm2s_aclk          => m_axis_mm2s_aclk,
+    m_axis_mm2s_aresetn       => m_axis_mm2s_aresetn,
+    m_axis_mm2s_tready        => m_axis_mm2s_tready,
+    m_axis_mm2s_tvalid        => m_axis_mm2s_tvalid,
+    m_axis_mm2s_tuser         => m_axis_mm2s_tuser,
+    m_axis_mm2s_tlast         => m_axis_mm2s_tlast,
+    m_axis_mm2s_tdata         => m_axis_mm2s_tdata,
+    m_axis_mm2s_tkeep         => m_axis_mm2s_tkeep,
+    m_axis_mm2s_tstrb         => m_axis_mm2s_tstrb,
+    m_axis_mm2s_tid           => m_axis_mm2s_tid,
+    m_axis_mm2s_tdest         => m_axis_mm2s_tdest,
+    --video configuration
+    vfpconfig_aclk            => vfpconfig_aclk,
+    vfpconfig_aresetn         => vfpconfig_aresetn,
+    vfpconfig_awaddr          => vfpconfig_awaddr,
+    vfpconfig_awprot          => vfpconfig_awprot,
+    vfpconfig_awvalid         => vfpconfig_awvalid,
+    vfpconfig_awready         => vfpconfig_awready,
+    vfpconfig_wdata           => vfpconfig_wdata,
+    vfpconfig_wstrb           => vfpconfig_wstrb,
+    vfpconfig_wvalid          => vfpconfig_wvalid,
+    vfpconfig_wready          => vfpconfig_wready,
+    vfpconfig_bresp           => vfpconfig_bresp,
+    vfpconfig_bvalid          => vfpconfig_bvalid,
+    vfpconfig_bready          => vfpconfig_bready,
+    vfpconfig_araddr          => vfpconfig_araddr,
+    vfpconfig_arprot          => vfpconfig_arprot,
+    vfpconfig_arvalid         => vfpconfig_arvalid,
+    vfpconfig_arready         => vfpconfig_arready,
+    vfpconfig_rdata           => vfpconfig_rdata,
+    vfpconfig_rresp           => vfpconfig_rresp,
+    vfpconfig_rvalid          => vfpconfig_rvalid,
+    vfpconfig_rready          => vfpconfig_rready);
 end arch_imp;

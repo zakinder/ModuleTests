@@ -13,7 +13,7 @@
 <a name="3"><q-n>     3  </q-n></a>		   <q-w>input</q-w> <q-w>wire</q-w> ina,
 <a name="4"><q-n>     4  </q-n></a>		   <q-w>input</q-w> <q-w>wire</q-w> inb,
 <a name="5"><q-n>     5  </q-n></a>		   <q-w>output</q-w> <q-w>reg</q-w> en_o,
-<a name="6"><q-n>     6  </q-n></a>		   <q-w>output</q-w> <q-w>reg</q-w> out);
+<a name="6"><q-n>     6  </q-n></a>		   <q-w>output</q-w> <q-w>reg</q-w> out_c);
 <a name="7"><q-n>     7  </q-n></a>	<q-w>integer</q-w> counter, state;
 <a name="8"><q-n>     8  </q-n></a>	<q-w>reg</q-w>[1:0] temp_a, temp_b;
 <a name="9"><q-n>     9  </q-n></a>	<q-w>reg</q-w>[2:0] temp_out;
@@ -23,7 +23,7 @@
 <a name="13"><q-n>     13  </q-n></a>		temp_a = 2'b00;
 <a name="14"><q-n>     14  </q-n></a>		temp_b = 2'b00;
 <a name="15"><q-n>     15  </q-n></a>		temp_out = 3'b000;
-<a name="16"><q-n>     16  </q-n></a>		out = 1;
+<a name="16"><q-n>     16  </q-n></a>		out_c = 1;
 <a name="17"><q-n>     17  </q-n></a>		en_o &lt;= 0;
 <a name="18"><q-n>     18  </q-n></a>		state = 0;
 <a name="19"><q-n>     19  </q-n></a>	<q-w>end</q-w>
@@ -50,14 +50,14 @@
 <a name="40"><q-n>     40  </q-n></a>			<q-w>end</q-w>
 <a name="41"><q-n>     41  </q-n></a>			<q-m>//State 2: Enable en_o and sends result to the output</q-m>
 <a name="42"><q-n>     42  </q-n></a>			2: <q-w>begin</q-w>
-<a name="43"><q-n>     43  </q-n></a>				out &lt;= temp_out[2];
+<a name="43"><q-n>     43  </q-n></a>				out_c &lt;= temp_out[2];
 <a name="44"><q-n>     44  </q-n></a>				temp_out = temp_out &lt;&lt; 1;
 <a name="45"><q-n>     45  </q-n></a>				counter = counter + 1;
 <a name="46"><q-n>     46  </q-n></a>				<q-w>if</q-w>(counter==3) en_o &lt;= 1'b1;
 <a name="47"><q-n>     47  </q-n></a>				<q-w>if</q-w>(counter==4) en_o &lt;= 1'b0;
 <a name="48"><q-n>     48  </q-n></a>				<q-w>if</q-w>(counter==6) <q-w>begin</q-w>
 <a name="49"><q-n>     49  </q-n></a>					counter = 0;
-<a name="50"><q-n>     50  </q-n></a>					out &lt;= 1'b1;
+<a name="50"><q-n>     50  </q-n></a>					out_c &lt;= 1'b1;
 <a name="51"><q-n>     51  </q-n></a>					state = 0;
 <a name="52"><q-n>     52  </q-n></a>				<q-w>end</q-w>
 <a name="53"><q-n>     53  </q-n></a>			<q-w>end</q-w>

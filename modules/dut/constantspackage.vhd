@@ -71,6 +71,31 @@ package constantspackage is
     constant frameSizeBot              : integer := 1080;
     constant pInterestWidth            : integer := 127;
     constant pInterestHight            : integer := 127;
+
+    -------------------------------------------------------------------------
+    constant blurMacKernel_1           : unsigned(i_data_width-1 downto 0) :=x"01";
+    constant blurMacKernel_2           : unsigned(i_data_width-1 downto 0) :=x"01";
+    constant blurMacKernel_3           : unsigned(i_data_width-1 downto 0) :=x"01";
+    constant blurMacKernel_4           : unsigned(i_data_width-1 downto 0) :=x"01";
+    constant blurMacKernel_5           : unsigned(i_data_width-1 downto 0) :=x"01";
+    constant blurMacKernel_6           : unsigned(i_data_width-1 downto 0) :=x"01";
+    constant blurMacKernel_7           : unsigned(i_data_width-1 downto 0) :=x"01";
+    constant blurMacKernel_8           : unsigned(i_data_width-1 downto 0) :=x"01";
+    constant blurMacKernel_9           : unsigned(i_data_width-1 downto 0) :=x"01";
     constant white                     : std_logic_vector(7 downto 0)      :=x"FF";
     constant black                     : std_logic_vector(7 downto 0)      :=x"00";
+    -------------------------------------------------------------------------
+    -------------------------------------------------------------------------
+    constant STREAM_TESTPATTERN1       : std_logic_vector(31 downto 0) := x"00000001";
+    constant STREAM_TESTPATTERN2       : std_logic_vector(31 downto 0) := x"00000002";
+    constant EXTERNAL_AXIS_STREAM      : std_logic_vector(31 downto 0) := x"00000000";
+    -------------------------------------------------------------------------
+    constant C_WHOLE_WIDTH             : integer := 3;  
+    constant DATA_EXT_WIDTH            : natural := i_data_width + 1;
+    constant FRAC_BITS_TO_KEEP         : natural := 3;  
+    constant MULT_RESULT_WIDTH         : natural := DATA_EXT_WIDTH + C_WHOLE_WIDTH + FRAC_BITS_TO_KEEP;
+    constant ADD_RESULT_WIDTH          : natural := MULT_RESULT_WIDTH + 1;
+    constant ROUND_RESULT_WIDTH        : natural := ADD_RESULT_WIDTH - FRAC_BITS_TO_KEEP;
+    constant ROUND                     : signed(ADD_RESULT_WIDTH-1 downto 0) := to_signed(0, ADD_RESULT_WIDTH-FRAC_BITS_TO_KEEP)&'1' & to_signed(0, FRAC_BITS_TO_KEEP-1);  
+    -------------------------------------------------------------------------
 end package;

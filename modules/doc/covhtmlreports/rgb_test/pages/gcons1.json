@@ -1,8 +1,8 @@
 var g_db_data = [
 {dummy:0},
-{name:'axi4_cg',f:1,type:6,id:22,tb:'544',h:'2',m:'542',hp:'0.36%',cov:['12.50%','R'],g:'100.00%',gp:['12.50%','R'],lnk:'__HDL_srcfile_1.htm#2284',hdlPath:'/top/vif',parent:'20'},
-{name:'template_cg',f:1,type:6,id:1230,tb:'24',h:'0',m:'24',hp:'0.00%',cov:['0.00%','R'],g:'100.00%',gp:['0.00%','R'],opts:[[],['merge_instance','auto(true)']],lnk:'__HDL_srcfile_1.htm#1232',hdlPath:'/socTest_pkg/template_monitor_afterToDut',parent:'1229'},
-{name:'aL_cg',f:1,type:6,id:1262,tb:'128',h:'0',m:'128',hp:'0.00%',cov:['0.00%','R'],g:'100.00%',gp:['0.00%','R'],opts:[[],['merge_instance','auto(true)']],lnk:'__HDL_srcfile_1.htm#1765',hdlPath:'/socTest_pkg/axiLite_fc_subscriber',parent:'1261'},
-{name:'rgb_cg',f:1,type:6,id:1266,tb:'454',h:'454',m:'0',hp:'100.00%',cov:['100.00%','G'],g:'100.00%',gp:['100.00%','G'],opts:[[],['merge_instance','auto(true)']],lnk:'__HDL_srcfile_1.htm#1786',hdlPath:'/socTest_pkg/rgb_fc_subscriber',parent:'1265'},
-{name:'axi4_cg',f:1,type:6,id:1326,tb:'544',h:'2',m:'542',hp:'0.36%',cov:['12.50%','R'],g:'100.00%',gp:['12.50%','R'],lnk:'__HDL_srcfile_1.htm#2284',hdlPath:'work.axi4_stream_if',parent:'2'}];
+{name:'axi4_cg',f:1,type:6,id:41,tb:'544',h:'1',m:'543',hp:'0.18%',cov:['6.25%','R'],g:'100.00%',gp:['6.25%','R'],lnk:'__HDL_srcfile_1.htm#2286',hdlPath:'/top/axi4s_vif',parent:'39'},
+{name:'template_cg',f:1,type:6,id:1915,tb:'24',h:'0',m:'24',hp:'0.00%',cov:['0.00%','R'],g:'100.00%',gp:['0.00%','R'],opts:[[],['merge_instance','auto(true)']],lnk:'__HDL_srcfile_1.htm#1239',hdlPath:'/socTest_pkg/template_monitor_predict',parent:'1914'},
+{name:'aL_cg',f:1,type:6,id:1947,tb:'128',h:'0',m:'128',hp:'0.00%',cov:['0.00%','R'],g:'100.00%',gp:['0.00%','R'],opts:[[],['merge_instance','auto(true)']],lnk:'__HDL_srcfile_1.htm#1772',hdlPath:'/socTest_pkg/axiLite_fc_subscriber',parent:'1946'},
+{name:'rgb_cg',f:1,type:6,id:1951,tb:'454',h:'454',m:'0',hp:'100.00%',cov:['100.00%','G'],g:'100.00%',gp:['100.00%','G'],opts:[[],['merge_instance','auto(true)']],lnk:'__HDL_srcfile_1.htm#1793',hdlPath:'/socTest_pkg/rgb_fc_subscriber',parent:'1950'},
+{name:'axi4_cg',f:1,type:6,id:2011,tb:'544',h:'1',m:'543',hp:'0.18%',cov:['6.25%','R'],g:'100.00%',gp:['6.25%','R'],lnk:'__HDL_srcfile_1.htm#2286',hdlPath:'work.axi4s_if',parent:'2'}];
 processConsCovergroupsData(g_db_data);
